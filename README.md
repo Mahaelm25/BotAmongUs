@@ -7,6 +7,8 @@ BotAmongUs is an educational Discord bot designed to demonstrate privacy risks a
 
 Inspired by the research paper *Bot Among Us* (PoPETs 2026), this project explores how Discord bots can access user information and how transparency mechanisms can improve awareness of data collection practices.
 
+This project was developed collaboratively as part of a university course. This repository also includes my personal contributions to improving security, administrator authentication, configuration, and documentation.
+
 ## Project Objectives
 
 - Demonstrate the privacy implications of Discord bot permissions and data collection.
