@@ -13,9 +13,11 @@ from flask_cors import CORS
 import sqlite3
 from datetime import datetime
 import os
+import secrets
 import sys
 
 app = Flask(__name__)
+API_KEY = os.environ.get("BOT_API_KEY")
 CORS(app)
 
 DB_PATH = "privacy_data.db"
@@ -84,6 +86,11 @@ def api_set_mode():
     Body JSON : { "mode": "perspective" } ou { "mode": "silencieux" }
     Ou sans body : toggle automatique.
     """
+    key = request.headers.get("X-API-Key")
+
+    if not API_KEY or not key or not secrets.compare_digest(key, API_KEY):
+        return jsonify({"error": "Accès refusé"}), 401
+        
     data = request.get_json(silent=True) or {}
     if "mode" in data and data["mode"] in ("silencieux", "perspective"):
         new_mode = data["mode"]
@@ -342,4 +349,4 @@ if __name__ == "__main__":
     print("  http://localhost:5000")
     print("  CORS activé — dashboard.html peut appeler librement")
     print("="*54)
-    app.run(debug=True, port=5000)
+    app.run(host="127.0.0.1", debug=False, port=5000)
